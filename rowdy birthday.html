@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advance Birthday Wishes 🎂</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+     body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f8f8f8;
+    }
+    #lockScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #lockScreen input {
+      padding: 10px;
+      margin: 10px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+    #lockScreen button {
+      padding: 10px 20px;
+      border: none;
+      background: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mainContent {
+      display: none;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    body { margin: 0; overflow: hidden; font-family: 'Inter', sans-serif; height: 100vh;
+      background: linear-gradient(135deg, #f9a8d4, #f3e8ff); animation: gradientShift 15s ease infinite; }
+    @keyframes gradientShift { 0% { background: linear-gradient(135deg, #f9a8d4, #f3e8ff); }
+      50% { background: linear-gradient(135deg, #fcd5ce, #ffe4e1); }
+      100% { background: linear-gradient(135deg, #f9a8d4, #f3e8ff); } }
+    #app { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    #content { position: relative; z-index: 10; width: 100%; height: 100%;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+    .step { position: absolute; width: 100%; max-width: 800px; padding: 60px; background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px); border-radius: 20px; text-align: center; opacity: 0; transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; }
+    .step.active { opacity: 1; transform: translateY(0); pointer-events: all; }
+    .btn { background: linear-gradient(135deg, #ec4899, #f43f5e); color: white; padding: 12px 24px;
+      border-radius: 50px; font-weight: 600; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 15px rgba(236,72,153,0.3); }
+    .text-gradient { background: linear-gradient(135deg, #ec4899, #f43f5e, #f59e0b);
+      -webkit-background-clip: text; color: transparent; font-family: 'Pacifico', cursive; }
+    .emoji { font-size: 3rem; margin-bottom: 20px; }
+    #progress-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      width: 80%; max-width: 400px; height: 6px; background: rgba(255,255,255,0.3); border-radius: 3px; z-index: 100; }
+    #progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #ec4899, #f43f5e);
+      border-radius: 3px; transition: width 0.5s ease; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="lockScreen">
+  <h2>Enter Password</h2>
+  <input type="password" id="passwordInput" placeholder="Password">
+  <button onclick="checkPassword()">Unlock</button>
+  <p id="errorMsg" style="color:red;"></p>
+</div>
+
+
+    <audio src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_ee9f6d8391.mp3?filename=soft-love-music-110bpm-8717.mp3" autoplay loop></audio>
+    <div id="progress-container"><div id="progress-bar"></div></div>
+    <div id="content">
+      <!-- Step 1 -->
+      <div class="step active" id="step1">
+        <div class="emoji">🎂</div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gradient">Hey Friend!</h1>
+        <p class="text-xl text-gray-700 mb-8">I made something fun for your upcoming birthday...</p>
+        <button class="btn" id="start-btn">Let's Begin</button>
+      </div>
+      <!-- Step 2 -->
+      <div class="step" id="step2">
+        <div class="emoji">🎉</div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">Advance Birthday Wishes!</h2>
+        <p class="text-lg text-gray-700 mb-6" id="countdown"></p>
+        <button class="btn" id="next-btn-2">See More</button>
+      </div>
+      <!-- Step 3 -->
+      <div class="step" id="step3">
+        <h2 class="text-3xl md:text-4xl font-bold mb-8 text-gradient">Why You're Awesome</h2>
+        <p class="text-gray-700 text-lg" style="justify-content:center;">Your awesomeness is in your uniqueness 🌸 You make me laugh when we talk, and even in silence you bring comfort 🤍 Even though I was shy in person, meeting you and building this bond feels really special ✨ From day one (Oct 4, 2023) till now, you’ve been a rare and constant part of my life — truly my 💎 Advance Happy Birthday 🎉 My fav sunshine ☀️ 🌸</p>
+        <button class="btn" id="next-btn-3">A Little Surprise</button>
+      </div>
+     <!-- Step 4 -->
+<div class="step" id="step4">
+  <div class="emoji">📸</div>
+  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">A Memory</h2>
+  
+  <!-- Memory image -->
+  <img src="Screenshot 2025-09-05 140621.png" 
+       alt="Memory" 
+       class="rounded-lg shadow-lg mx-auto mb-4" width="250">
+  <p class="text-lg text-gray-700 italic mb-4">The day u told about me 😊</p>
+
+  <!-- Her singing audio (hidden player) -->
+ <div class="bg-white/70 rounded-xl p-4 shadow-md text-center">
+    <p class="text-gray-800 font-medium mb-3">🎶 Click below to play the song you sang 🎶</p>
+    <audio id="her-song" controls class="mx-auto">
+      <source src="WhatsApp Audio 2025-09-05 at 13.52.19_f0dead11.dat (online-audio-converter.com).mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- Custom play button (centered) -->
+  <div class="flex justify-center mt-4">
+    <button id="song-btn" class="text-4xl hover:scale-110 transition">
+      🎵
+    </button>
+  </div>
+
+  <button class="btn mt-6" id="next-btn-4">One Last Thing</button>
+</div>
+
+<!-- Step 5 -->
+<div class="step" id="step5">
+  <div class="emoji">🎈</div>
+  <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gradient">My Wish for You</h2>
+  <p class="text-lg text-gray-700 mb-8">
+    May your birthday bring happiness, laughter, and everything you love. 
+    You're truly a wonderful friend! 💫
+  </p>
+  
+  <!-- Celebrate Button -->
+  <button class="btn" id="confetti-btn">Celebrate 🎉</button>
+
+  <!-- Hidden photo (appears after Celebrate click) -->
+  <div id="final-photo" class="hidden mt-6">
+    <img src="WhatsApp Image 2025-09-05 at 15.10.21_6ceeeeea.jpg" alt="Final Memory"
+         class="rounded-xl shadow-lg mx-auto" width="250">
+    <p class="text-lg text-gray-700 italic mt-4">Forever a special memory 💖</p>
+  </div>
+
+  <!-- Hidden audio (plays automatically when Celebrate clicked) -->
+  <audio id="bg-music">
+    <source src="Tamil Friendship.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <p class="mt-8 text-gray-500">Made with 💖 for a special friend</p>
+</div>
+    </div>
+  </div>  
+  <script>
+    // Countdown for advance wishes
+    const birthday = new Date("2025-09-13T00:00:00");
+    const today = new Date();
+    const diffTime = birthday.getTime() - today.getTime();
+    const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    document.getElementById("countdown").innerText =
+      daysLeft > 0 ? `🎂 Only ${daysLeft} days left for your birthday! 🎁` :
+      daysLeft === 0 ? "🎉 Today is your Birthday! 🥳" :
+      "Birthday passed, waiting for next year 🎈";
+
+    // Step navigation
+    let currentStep = 1;
+    const totalSteps = 5;
+    function updateProgressBar() {
+      document.getElementById('progress-bar').style.width =
+        `${((currentStep - 1) / (totalSteps - 1)) * 100}%`;
+    }
+    function showStep(stepNumber) {
+      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+      document.getElementById(`step${stepNumber}`).classList.add('active');
+      currentStep = stepNumber;
+      updateProgressBar();
+    }
+    document.getElementById('start-btn').addEventListener('click', () => showStep(2));
+    document.getElementById('next-btn-2').addEventListener('click', () => showStep(3));
+    document.getElementById('next-btn-3').addEventListener('click', () => showStep(4));
+    document.getElementById('next-btn-4').addEventListener('click', () => showStep(5));
+
+ function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    const correctPassword = "rowdy"; // 🔑 Change your secret password here
+    if (input === correctPassword) {
+      document.getElementById("lockScreen").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+    } else {
+      document.getElementById("errorMsg").innerText = "❌ Wrong password, try again!";
+    }
+  }
+// Move from Step 4 → Step 5
+document.getElementById("next-btn-4").addEventListener("click", function() {
+  // stop the song if it's playing
+  const song = document.getElementById("her-song");
+  song.pause();
+  song.currentTime = 0; // reset to start
+
+  // move to next step
+  document.getElementById("step4").classList.remove("active");
+  document.getElementById("step5").classList.add("active");
+});
+
+// Confetti
+    document.getElementById('confetti-btn').addEventListener('click', () => {
+      const duration = 3 * 1000, end = Date.now() + duration;
+      (function frame() {
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      })();
+    });
+// Celebrate button in Step 5
+document.getElementById("confetti-btn").addEventListener("click", function() {
+  // Show final photo
+  document.getElementById("final-photo").classList.remove("hidden");
+
+  // Play background music
+  const music = document.getElementById("bg-music");
+  music.play();
+
+  // Confetti animation
+  for (let i = 0; i < 100; i++) {
+    let confetti = document.createElement("div");
+    confetti.innerHTML = "🎉";
+    confetti.style.position = "fixed";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.top = "-10px";
+    confetti.style.fontSize = Math.random() * 24 + 12 + "px";
+    confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+    document.body.appendChild(confetti);
+
+    setTimeout(() => {
+      confetti.remove();
+    }, 5000);
+  }
+});
+
+    // Init
+    updateProgressBar();
+  </script>
+</body>
+</html>
