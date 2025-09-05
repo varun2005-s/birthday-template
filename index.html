@@ -30,6 +30,12 @@
       align-items: center;
       z-index: 9999;
     }
+    @keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
     #lockScreen input {
       padding: 10px;
       margin: 10px;
@@ -215,16 +221,15 @@ document.getElementById("next-btn-4").addEventListener("click", function() {
 });
 
 // Confetti
-    document.getElementById('confetti-btn').addEventListener('click', () => {
-      const duration = 3 * 1000, end = Date.now() + duration;
-      (function frame() {
-        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      })();
-    });
-// Celebrate button in Step 5
-document.getElementById("confetti-btn").addEventListener("click", function() {
+document.getElementById('confetti-btn').addEventListener('click', () => {
+  // Confetti burst
+  const duration = 3 * 1000, end = Date.now() + duration;
+  (function frame() {
+    confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+    confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+
   // Show final photo
   document.getElementById("final-photo").classList.remove("hidden");
 
@@ -232,25 +237,27 @@ document.getElementById("confetti-btn").addEventListener("click", function() {
   const music = document.getElementById("bg-music");
   music.play();
 
-  // Confetti animation
-  for (let i = 0; i < 100; i++) {
-    let confetti = document.createElement("div");
-    confetti.innerHTML = "🎉";
-    confetti.style.position = "fixed";
-    confetti.style.left = Math.random() * 100 + "vw";
-    confetti.style.top = "-10px";
-    confetti.style.fontSize = Math.random() * 24 + 12 + "px";
-    confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
-    document.body.appendChild(confetti);
+  // Continuous confetti (emoji 🎉)
+  let confettiInterval = setInterval(() => {
+    let confettiElem = document.createElement("div");
+    confettiElem.innerHTML = "🎉";
+    confettiElem.style.position = "fixed";
+    confettiElem.style.left = Math.random() * 100 + "vw";
+    confettiElem.style.top = "-10px";
+    confettiElem.style.fontSize = Math.random() * 24 + 12 + "px";
+    confettiElem.style.animation = `fall ${Math.random() * 3 + 2}s linear forwards`;
+    document.body.appendChild(confettiElem);
 
+    // remove after falling
     setTimeout(() => {
-      confetti.remove();
+      confettiElem.remove();
     }, 5000);
-  }
-});
+  }, 200); // 👈 every 200ms new pop
 
-    // Init
-    updateProgressBar();
+  // Stop confetti after 10 sec (optional)
+  setTimeout(() => clearInterval(confettiInterval), 10000);
+});
+    
   </script>
 </body>
 </html>
